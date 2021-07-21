@@ -37,7 +37,7 @@ const Index = ({userInfo}) => {
     .then((res) => {
       console.log('success')
       Cookie.set("userInfo", JSON.stringify(res.data));
-      router.push('/ads')
+      router.push('/specs')
     })
     .catch((err) => {
       setLoginErr(true)
