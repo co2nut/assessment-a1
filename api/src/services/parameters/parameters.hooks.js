@@ -1,10 +1,11 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
-const searchRegexOr = require('../../hooks/searchRegexOr');
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
-    find: [ searchRegexOr()],
+    all: [ 
+      // authenticate('jwt') 
+    ],
+    find: [],
     get: [],
     create: [],
     update: [],

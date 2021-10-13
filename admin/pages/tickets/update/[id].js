@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { Layout, Card, Row, Col } from 'antd';
 import SideBar from '../../../components/SideBar'
 import { parseCookies } from "../../../lib/parseCookies";
-import UserForm  from '../../../components/users/form'
+import TicketForm  from '../../../components/tickets/form'
 import { API_URL } from '../../../api'
 import axios from 'axios'
 
@@ -21,11 +21,11 @@ const App = (props) => {
           <Content style={{ minHeight: '100vh', margin: 10, padding: 20, backgroundColor: '#fff' }}>
             <Row>
               <Col span={20}>
-                <h3 style={{ margin: 0 }}>Update User</h3>
+                <h3 style={{ margin: 0 }}>Update Ticket</h3>
               </Col>
 
               <Col span={12} >
-                <UserForm data={props.data} mode="update"/>
+                <TicketForm data={props.data} mode="update"/>
               </Col>
             </Row>
 
@@ -38,10 +38,11 @@ const App = (props) => {
 
 export default App
 
-export async function getServerSideProps({ req, params }) {
+export async function getServerSideProps({ req }) {
   const accessToken =  JSON.parse(parseCookies(req).userInfo).accessToken;
   const { id } = req.params
-  const respond = await axios.get(`${API_URL}users/${id}`,{
+  console.log({id})
+  const response = await axios.get(`${API_URL}tickets/${id}`,{
     headers: {
       'Authorization': `Bearer ${accessToken}` 
     }
@@ -49,7 +50,7 @@ export async function getServerSideProps({ req, params }) {
 
   return {
     props: {
-      data: respond.data || {},
+      data: response.data || {},
     }
   };
 }

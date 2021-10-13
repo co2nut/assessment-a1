@@ -1,17 +1,17 @@
-// specs-model.js - A mongoose model
+// parameters-model.js - A mongoose model
 // 
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 module.exports = function (app) {
-  const modelName = 'specs';
+  const modelName = 'parameters';
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema({
-    make: { type: String, required: true },
-    model: { type: String, required: true },
-    year: { type: String, required: true },
-    variant: { type: String, required: true },
-    status: { type: String },
+    type: { type: String, required: true }, //1:ticket type; 2: userRole;
+    actionAllowed:[],// for ticket type purpose. 1:read; 2:create; 3:update; 4:delete;
+    value:{ type: String, required: true },
+    accessBy: [],
+    status:{ type: String, default:'1' },
   }, {
     timestamps: true
   });

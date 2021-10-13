@@ -6,7 +6,7 @@ import SideBar from '../../components/SideBar'
 import axios from "axios"
 import Cookie from "js-cookie";
 import { parseCookies } from "../../lib/parseCookies";
-import UserForm  from '../../components/users/form'
+import ParameterForm  from '../../components/parameters/form'
 
 const { Header, Content} = Layout;
 
@@ -23,11 +23,11 @@ const New = () => {
           <Content style={{minHeight:'100vh',margin:10, padding:20, backgroundColor:'#fff'}}>
           <Row>
             <Col span={20}>
-              <h3 style={{margin:0}}>Create User</h3>
+              <h3 style={{margin:0}}>Create Parameter</h3>
             </Col>
 
             <Col span={12} >
-              <UserForm  data={{username:'', password:''}} mode="new"/>
+              <ParameterForm  data={{type:'', actionAllowed:'', values:'', accessBy:''}} mode="new"/>
               
             </Col>
           </Row>

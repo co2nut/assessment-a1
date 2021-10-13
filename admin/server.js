@@ -16,7 +16,7 @@ app.prepare().then(() => {
   })
 
   server.get('/test', async (req, res) => {
-    const respond = await axios.get(`http://66.42.57.217:3000/api/specs`,{
+    const respond = await axios.get(`http://66.42.57.217:3000/api/tickets`,{
       headers: {
         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MjUzNzgyOTMsInJvbGVzIjpbInVzZXIiXSwidXNlcm5hbWUiOiJhZG1pbiJ9.TmPVRhmjjHNIPK-IRrY1-cL3mzqDE6VJhGkJR2W75Wc` 
       }
@@ -46,74 +46,35 @@ app.prepare().then(() => {
   })
   // ------ users ------ end
 
-  // ------ specs ------ begin
-  server.get('/specs', (req, res) => {
-    return app.render(req, res, '/specs', req.query)
+  // ------ tickets ------ begin
+  server.get('/tickets', (req, res) => {
+    return app.render(req, res, '/tickets', req.query)
   })
 
-  server.get('/specs/new', (req, res) => {
-    return app.render(req, res, '/specs/new', req.query)
+  server.get('/tickets/new', (req, res) => {
+    return app.render(req, res, '/tickets/new', req.query)
   })
 
-  server.get('/specs/update/:id', (req, res) => {
-    return app.render(req, res, '/specs/update/[id]', req.query)
+  server.get('/tickets/update/:id', (req, res) => {
+    return app.render(req, res, '/tickets/update/[id]', req.query)
   })
-  // ------ specs ------ end
+  // ------ tickets ------ end
 
-  // ------ banners ------ begin
-  server.get('/banners', (req, res) => {
-    return app.render(req, res, '/banners', req.query)
-  })
 
-  server.get('/banners/manage', (req, res) => {
-    return app.render(req, res, '/banners/manage', req.query)
+  // ------ parameters ------ begin
+  server.get('/parameters', (req, res) => {
+    return app.render(req, res, '/parameters', req.query)
   })
 
-  server.get('/banners/new', (req, res) => {
-    return app.render(req, res, '/banners/new', req.query)
+  server.get('/parameters/new', (req, res) => {
+    return app.render(req, res, '/parameters/new', req.query)
   })
 
-  server.get('/banners/update/:id', (req, res) => {
-    return app.render(req, res, '/banners/update/[id]', req.query)
+  server.get('/parameters/update/:id', (req, res) => {
+    return app.render(req, res, '/parameters/update/[id]', req.query)
   })
-  // ------ banners ------ end
+  // ------ parameters ------ end
 
-  // ------ ads ------ begin
-  server.get('/ads', (req, res) => {
-    return app.render(req, res, '/ads', req.query)
-  })
-
-  server.get('/ads/new', (req, res) => {
-    return app.render(req, res, '/ads/new', req.query)
-  })
-
-  server.get('/ads/update/:id', (req, res) => {
-    return app.render(req, res, '/ads/update/[id]', req.query)
-  })
-  // ------ ads ------ end
-
-  // ------ ads-review ------ begin
-  server.get('/ads-review', (req, res) => {
-    return app.render(req, res, '/ads-review', req.query)
-  })
-  // ------ ads-review ------ end
-
-  // ------ coming soon ------ begin
-  server.get('/coming-soon', (req, res) => {
-    return app.render(req, res, '/coming-soon', req.query)
-  })
-
-  server.get('/coming-soon/new', (req, res) => {
-    return app.render(req, res, '/coming-soon/new', req.query)
-  })
-
-  server.get('/coming-soon/update/:id', (req, res) => {
-    return app.render(req, res, '/coming-soon/update/[id]', req.query)
-  })
-  // ------ coming-soon ------ end
-  // server.get('/b', (req, res) => {
-  //   return app.render(req, res, '/b', req.query)
-  // })
 
   server.all('*', (req, res) => {
     return handle(req, res)

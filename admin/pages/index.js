@@ -22,27 +22,32 @@ const tailLayout = {
   },
 };
 
-const Index = ({userInfo}) => {
+const Index = ({ userInfo }) => {
   const router = useRouter()
   const [loginErr, setLoginErr] = useState(false)
 
   const onFinish = (values) => {
     axios.post(`${API_URL}authentication`,
       {
-        strategy:"local",
+        strategy: "local",
         username: values.username,
         password: values.password,
       }
     )
-    .then((res) => {
-      console.log('success')
-      Cookie.set("userInfo", JSON.stringify(res.data));
-      router.push('/specs')
-    })
-    .catch((err) => {
-      setLoginErr(true)
-      console.log(err)
-    })
+      .then((res) => {
+        console.log('success', {res})
+        let userInfo = res.data.user
+        Cookie.set("userInfo", JSON.stringify(res.data));
+        if (userInfo.roles.indexOf('admin') >= 0) {
+          router.push('/users')
+        } else {
+          router.push('/tickets')
+        }
+      })
+      .catch((err) => {
+        setLoginErr(true)
+        console.log(err)
+      })
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -52,20 +57,20 @@ const Index = ({userInfo}) => {
   return (
     <>
       <Head>
-        <title>Car CMS</title>
+        <title>Ticket Management System</title>
       </Head>
       <Row style={{ marginTop: '10%' }}>
         <Col span={8} offset={8} >
           {loginErr ? <Alert message="Unauthorized Login" closable type="error" showIcon /> : null}
           <Card>
-            <h2 style={{ textAlign: 'center', marginBottom: 50 }}><span style={{fontWeight:'bolder'}}>Car</span> CMS</h2>
+            <h2 style={{ textAlign: 'center', marginBottom: 50 }}><span style={{ fontWeight: 'bolder' }}>Ticket Management System</span></h2>
             <Form
               {...layout}
               name="basic"
               initialValues={{
                 remember: true,
               }}
-              onValuesChange={()=>setLoginErr(false)}
+              onValuesChange={() => setLoginErr(false)}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
             >
@@ -98,7 +103,7 @@ const Index = ({userInfo}) => {
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                   Login
-              </Button>
+                </Button>
               </Form.Item>
             </Form>
           </Card>

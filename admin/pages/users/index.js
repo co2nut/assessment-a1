@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Modal, Layout, Card, Row, Col, Input,Button } from 'antd';
+import { Tag, Modal, Layout, Card, Row, Col, Input,Button } from 'antd';
 import SideBar from '../../components/SideBar'
 import Cookie from "js-cookie";
 import { parseCookies } from "../../lib/parseCookies";
@@ -117,14 +117,20 @@ const Index = (props) => {
   const columns = [
     {
       title: 'Username',
-      // sorter: {
-      //   compare: (a, b) => a.username - b.username,
-      //   multiple: 1,
-      // },
       dataIndex: 'username',
       key: 'username',
       fixed:'left',
       width: '40%',
+    },
+    {
+      title: 'Roles',
+      dataIndex: 'roles',
+      key: 'roles',
+      render: (v, r) => {
+        return v.map(i=>(
+          <Tag>{i}</Tag>
+        ))
+      }
     },
     {
       title: 'Action',
@@ -146,8 +152,8 @@ const Index = (props) => {
   return (
     <>
       <Head>
-        <title>Car CMS </title>
-        <meta name="og:title" content="Aneka Auto" key="title" />
+        <title>Ticket Management System </title>
+        <meta name="og:title" content="Ticketing System" key="title" />
       </Head>
       <Layout>
         <SideBar activeMenu='5' />

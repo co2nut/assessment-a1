@@ -14,6 +14,8 @@ const SideBar = (props) => {
   if (Cookie.get('userInfo')) {
     userInfo = JSON.parse(Cookie.get('userInfo'))
     userInfo.roles = userInfo.user.roles
+
+    // console.log({userInfo})
   }
 
 
@@ -28,17 +30,22 @@ const SideBar = (props) => {
       }}
     >
       <Menu theme="light" mode="inline" selectedKeys={[props.activeMenu]}>
-        <div style={{ height: '50px', width: '100%', backgroundColor: "bledge", padding: '20%' }}><h3><span style={{ fontWeight: 'bolder' }}>Car</span><span>CMS</span></h3></div>
+        <div style={{ height: '50px', width: '100%', backgroundColor: "bledge", padding: '20%' }}><h3><span style={{ fontWeight: 'bolder' }}>Menu</span></h3></div>
 
         {userInfo.roles ? <>
           {userInfo.roles.indexOf('admin') >= 0 ? <>
-            <Menu.Item key="3" onClick={() => router.push('/specs')} icon={<PlusSquareOutlined />}>
-              Models
+            <Menu.Item key="1" onClick={() => router.push('/parameters')} icon={<UserOutlined />}>
+              Parameters
             </Menu.Item>
-            <Menu.Item key="5" onClick={() => router.push('/users')} icon={<UserOutlined />}>
+            <Menu.Item key="2" onClick={() => router.push('/users')} icon={<UserOutlined />}>
               Users
             </Menu.Item>
-          </> : null}
+            <Menu.Item key="3" onClick={() => router.push('/tickets')} icon={<PlusSquareOutlined />}>
+              Tickets
+            </Menu.Item>
+          </> : <Menu.Item key="3" onClick={() => router.push('/tickets')} icon={<PlusSquareOutlined />}>
+              Tickets
+            </Menu.Item>}
         </>
           : null
         }

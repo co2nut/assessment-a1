@@ -6,7 +6,7 @@ import SideBar from '../../components/SideBar'
 import axios from "axios"
 import Cookie from "js-cookie";
 import { parseCookies } from "../../lib/parseCookies";
-import SpecForm  from '../../components/specs/form'
+import TicketForm  from '../../components/tickets/form'
 
 const { Header, Content} = Layout;
 
@@ -14,7 +14,7 @@ const New = () => {
   return (
     <>
       <Head>
-        <title>Aneka Auto</title>
+        <title>Ticketing System</title>
       </Head>
       <Layout>
         <SideBar activeMenu='1' />
@@ -23,11 +23,11 @@ const New = () => {
           <Content style={{minHeight:'100vh',margin:10, padding:20, backgroundColor:'#fff'}}>
           <Row>
             <Col span={20}>
-              <h3 style={{margin:0}}>Create Model</h3>
+              <h3 style={{margin:0}}>Create Ticket</h3>
             </Col>
 
             <Col span={12} >
-              <SpecForm  data={{make:'', model:'', variant:'', year:''}} mode="new"/>
+              <TicketForm  data={{ticketType:'', severity:'', priority:'', summary:'', descriptions:''}} mode="new"/>
               
             </Col>
           </Row>

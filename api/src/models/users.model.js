@@ -10,7 +10,8 @@ module.exports = function (app) {
     username: { type: String, unique: true, lowercase: true },
     password: { type: String },
     status: { type: String },
-    roles: [ { type: String } ],
+    roles: [ { type: String } ],//QA, RD, PM
+    status:{type: String, default:'1'}
   
   
   }, {

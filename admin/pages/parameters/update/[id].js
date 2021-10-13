@@ -12,7 +12,7 @@ const App = (props) => {
   return (
     <>
       <Head>
-        <title>Aneka Auto</title>
+        <title>Ticketing System</title>
       </Head>
       <Layout>
         <SideBar activeMenu='1' />

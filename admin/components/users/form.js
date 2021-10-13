@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Layout, Card, Row, Col, Form, Input, Button, Alert } from 'antd';
+import { Select, Layout, Card, Row, Col, Form, Input, Button, Alert } from 'antd';
 import SideBar from '../../components/SideBar'
 import axios from "axios"
 import Cookie from "js-cookie";
@@ -24,22 +24,31 @@ const tailLayout = {
 };
 
 const App = (props) => {
+  useEffect(() => {
+    axios.get(`${API_URL}parameters/${props.data._id}`)
+      .then((res) => {
+        console.log({ res })
+      })
+      .catch((err) => {
+        console.log({ err })
+      })
+  }, [])
+
   const router = useRouter()
   const [formErr, setFormErr] = useState('')
-  
+
   const onFinish = (values) => {
-    const { password, confirmPassword, username }  = values
-    if( password !== confirmPassword ){
+    const { password, confirmPassword, username, roles } = values
+    if (password !== confirmPassword) {
       return setFormErr("Password & Confirm Password is not same")
     }
 
-    if(props.mode === 'update'){
+    if (props.mode === 'update') {
       return axios.put(`${API_URL}users/${props.data._id}`,
         {
           username,
           password,
-          roles:['user'],
-          status:"1"
+          roles,
         },
         {
           headers: {
@@ -47,22 +56,21 @@ const App = (props) => {
           }
         }
       )
-      .then((res) => {
-        if(res.data){
-          router.push('/users')
-        }
-      })
-      .catch((err) => {
-        setFormErr("Username already exists")
-      })
+        .then((res) => {
+          if (res.data) {
+            router.push('/users')
+          }
+        })
+        .catch((err) => {
+          setFormErr("Username already exists")
+        })
     }
 
     axios.post(`${API_URL}users`,
       {
         username,
         password,
-        roles:['user'],
-        status:"1"
+        roles,
       },
       {
         headers: {
@@ -70,22 +78,26 @@ const App = (props) => {
         }
       }
     )
-    .then((res) => {
-      if(res.data){
-        router.push('/users')
-      }
-    })
-    .catch((err) => {
-      setFormErr("Username already exists")
-      console.log(err)
-    })
+      .then((res) => {
+        if (res.data) {
+          router.push('/users')
+        }
+      })
+      .catch((err) => {
+        setFormErr("Username already exists")
+        console.log(err)
+      })
 
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-  const {username, password} = props.data
+
+  const { username, password , roles} = props.data
+
+  const rolesOption = ['RD', 'QA', "PM"];
+
   return (
     <>
       {formErr ? <Alert message={formErr} closable type="error" showIcon /> : null}
@@ -108,6 +120,27 @@ const App = (props) => {
             ]}
           >
             <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Roles"
+            name="roles"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your roles!',
+              },
+            ]}
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              style={{ width: '100%' }}
+              placeholder="Please select roles"
+              // onChange={handleChange}
+            >
+              {rolesOption.map(i=>( <Select.Option key={i}>{i}</Select.Option> ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -140,7 +173,7 @@ const App = (props) => {
             <Row>
               <Col span={6}>
                 <Button type="primary" htmlType="submit">
-                  {props.mode==='update'?"Update":"Create"}
+                  {props.mode === 'update' ? "Update" : "Create"}
                 </Button>
               </Col>
               <Col span={6}>
